@@ -2,9 +2,12 @@ class TwiddleThumbs::CLI
     def call
         welcome
         bored
-        suggestion_list
-        get_first_choice
-        category_list
+        activity_process
+        # suggestion_list
+        # get_first_choice
+        # category_list
+        # get_activity
+        # still_bored
         goodbye
     end
 
@@ -29,25 +32,59 @@ class TwiddleThumbs::CLI
         end
     end
 
+    def activity_process
+        suggestion_list
+        get_first_choice
+        category_list
+        get_activity
+        still_bored
+    end
+
     def suggestion_list
-        puts "How would you like to search for an activity?"
-        @parameters = ["Price", "Type", "Number of Participants", "Random"]
-        @parameters.each_with_index {|parameter, index| puts "#{index + 1}. #{parameter}"}
+        @parameter_list = ["Price", "Type", "Participants", "Random"]
+        @parameter_list.each_with_index {|parameter, index| puts "#{index + 1}. #{parameter}"}
+        print "Please choose how you would like to search for an activity using the list number:"
     end
 
     def get_first_choice
-        @first_choice = gets.chomp.to_i
-    end
-
-    def category_list
-        if @first_choice = 1
-            Type.new("recreational")
+        @input = gets.chomp.to_i
+        if @input.between?(1, 4)
+            @choice = @parameter_list[@input - 1]
+        else
+            puts "Please enter a valid number.".red
+            get_first_choice
         end
     end
 
+    def category_list
+        if @choice == "Type"
+            @parameter = Type.new
+            @parameter.choose_type
+            @url = @parameter.create_url
+        end
+
+        
+        
+        
+        # if @choice == "Price"
+        #     @price = ["Free", "Cheap", "Somewhat Expensive", "Expensive"]
+        #     @price.each_with_index {|cost, index| puts "#{index + 1}. #{cost}"}
+    end
+
+    def get_activity
+        Api.new(@url).pretty_print
+    end
+
+    def still_bored
+        print "Are you still bored? y/n: "
+        answer = gets.chomp
+        if answer == "y"
+            activity_process
+        end
+    end
 
     def goodbye
-        puts "Stay busy...Thanks for stopping by!  Goodbye!".green
+        puts "Great!!  Stay busy & Thanks for stopping by!  Goodbye!".green
     end
 
 
