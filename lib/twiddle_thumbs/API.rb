@@ -24,11 +24,12 @@ class Api
         elsif hash["price"].between?(0.01, 0.19)
             hash["price"] = "Cheap"
         elsif hash["price"].between?(0.2, 0.6)
-            hash["price"] = "Somewhat Expensive"
+            hash["price"] = "Costs a little $$"
         elsif hash["price"] > 0.6
             hash["price"] = "EXPENSIVE"
         end
         values = hash.values
+        system 'clear'
         puts "Activity: #{values[0].yellow}"
         puts "Type: #{values[1].capitalize.cyan}"
         puts "Price: #{values[3].green}"

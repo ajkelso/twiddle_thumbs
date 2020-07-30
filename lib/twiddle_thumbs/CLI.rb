@@ -1,13 +1,9 @@
 class TwiddleThumbs::CLI
     def call
+        system 'clear'
         welcome
         bored
         activity_process
-        # suggestion_list
-        # get_first_choice
-        # category_list
-        # get_activity
-        # still_bored
         goodbye
     end
 
@@ -19,11 +15,12 @@ class TwiddleThumbs::CLI
         puts "Are you bored?".light_blue
         print "y/n:".blue
         answer = gets.chomp
+        system 'clear'
         if answer == "y"
             puts "You're in Luck!!"
             puts "Let's help find you something interesting to do..."
+            puts "\n"
         elsif answer == "n"
-            puts "Good for you!!!"
             goodbye
             exit
         else
@@ -61,6 +58,11 @@ class TwiddleThumbs::CLI
             @parameter = Type.new
             @parameter.choose_type
             @url = @parameter.create_url
+            binding.pry
+        elsif @choice == "Price"
+            @parameter = Price.new
+            @parameter.choose_price
+            @url = @parameter.create_url
         end
 
         
@@ -79,11 +81,13 @@ class TwiddleThumbs::CLI
         print "Are you still bored? y/n: "
         answer = gets.chomp
         if answer == "y"
+            system 'clear'
             activity_process
         end
     end
 
     def goodbye
+        puts "\n \n"
         puts "Great!!  Stay busy & Thanks for stopping by!  Goodbye!".green
     end
 
