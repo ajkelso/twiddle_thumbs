@@ -30,10 +30,13 @@ class Api
         end
         values = hash.values
         system 'clear'
-        puts "Activity: #{values[0].yellow}"
-        puts "Type: #{values[1].capitalize.cyan}"
-        puts "Price: #{values[3].green}"
-        puts "Participants: #{values[2].to_s.blue}"
+        puts "You should...".blue
+        puts "\n"
+        puts "#{values[0].upcase}!".light_cyan.underline
+        puts "\n"
+        puts "Type: ".blue + "#{values[1].capitalize.magenta}"
+        puts "Price: ".blue + "#{values[3].magenta}"
+        puts "Participants: ".blue + "#{values[2].to_s.magenta}"
     end
 
     

@@ -4,23 +4,22 @@ class TwiddleThumbs::CLI
         welcome
         bored
         activity_process
-        goodbye
     end
 
     def welcome
-        puts "Welcome to Twiddle Thumbs!!".blue
+        puts "!!!WELCOME TO TWIDDLE THUMBS!!!".blue.underline
+        puts "-If you're bored, we're here to help-".magenta
+        puts "\n \n"
     end
 
     def bored
-        puts "Are you bored?".light_blue
-        print "y/n:".blue
-        answer = gets.chomp
-        system 'clear'
-        if answer == "y"
-            puts "You're in Luck!!"
-            puts "Let's help find you something interesting to do..."
+        print "Are you bored? y/n:".light_cyan
+        answer = gets.chomp.downcase
+        if answer.start_with?("y")
+            system 'clear'
+            puts "OK...Let's help find you something interesting to do...".light_blue
             puts "\n"
-        elsif answer == "n"
+        elsif answer.start_with?("n")
             goodbye
             exit
         else
@@ -31,7 +30,7 @@ class TwiddleThumbs::CLI
 
     def activity_process
         suggestion_list
-        get_first_choice
+        get_choice
         category_list
         get_activity
         still_bored
@@ -39,38 +38,35 @@ class TwiddleThumbs::CLI
 
     def suggestion_list
         @parameter_list = ["Price", "Type", "Participants", "Random"]
-        @parameter_list.each_with_index {|parameter, index| puts "#{index + 1}. #{parameter}"}
-        print "Please choose how you would like to search for an activity using the list number:"
+        @parameter_list.each_with_index {|parameter, index| puts "#{index + 1}. ".blue + "#{parameter}".light_cyan}
+        puts "\n \n"
+        print "Please choose how you would like to search for an activity using the list number:".magenta
     end
 
-    def get_first_choice
+    def get_choice
         @input = gets.chomp.to_i
         if @input.between?(1, 4)
             @choice = @parameter_list[@input - 1]
         else
             puts "Please enter a valid number.".red
-            get_first_choice
+            get_choice
         end
     end
 
     def category_list
-        if @choice == "Type"
-            @parameter = Type.new
-            @parameter.choose_type
-            @url = @parameter.create_url
-            binding.pry
-        elsif @choice == "Price"
-            @parameter = Price.new
-            @parameter.choose_price
+        if @choice == "Random"
+            @url = "http://www.boredapi.com/api/activity/"
+        else
+            if @choice == "Type"
+                @parameter = Type.new
+            elsif @choice == "Price"
+                @parameter = Price.new
+            elsif @choice == "Participants"
+                @parameter = Participants.new
+            end
+            @parameter.choose
             @url = @parameter.create_url
         end
-
-        
-        
-        
-        # if @choice == "Price"
-        #     @price = ["Free", "Cheap", "Somewhat Expensive", "Expensive"]
-        #     @price.each_with_index {|cost, index| puts "#{index + 1}. #{cost}"}
     end
 
     def get_activity
@@ -78,17 +74,23 @@ class TwiddleThumbs::CLI
     end
 
     def still_bored
-        print "Are you still bored? y/n: "
+        puts "\n \n"
+        print "Still bored? y/n: ".cyan
         answer = gets.chomp
         if answer == "y"
             system 'clear'
             activity_process
+        elsif answer == "n"
+            goodbye
+        else
+            "Invalid Entry".red
+            still_bored
         end
     end
 
     def goodbye
         puts "\n \n"
-        puts "Great!!  Stay busy & Thanks for stopping by!  Goodbye!".green
+        puts "Great!!  Stay busy & Thanks for stopping by!  Goodbye!".light_cyan
     end
 
 
