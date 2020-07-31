@@ -17,8 +17,6 @@ class TwiddleThumbs::CLI
         answer = gets.chomp.downcase
         if answer.start_with?("y")
             system 'clear'
-            puts "OK...Let's help find you something interesting to do...".light_blue
-            puts "\n"
         elsif answer.start_with?("n")
             goodbye
             exit
@@ -37,6 +35,8 @@ class TwiddleThumbs::CLI
     end
 
     def suggestion_list
+        puts "OK...Let's help find you something interesting to do...".light_blue
+        puts "\n"
         @parameter_list = ["Price", "Type", "Participants", "Random"]
         @parameter_list.each_with_index {|parameter, index| puts "#{index + 1}. ".blue + "#{parameter}".light_cyan}
         puts "\n \n"

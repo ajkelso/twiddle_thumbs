@@ -32,7 +32,7 @@ class Api
         system 'clear'
         puts "You should...".blue
         puts "\n"
-        puts "#{values[0].upcase}!".light_cyan.underline
+        puts "#{values[0]}!".light_cyan.underline
         puts "\n"
         puts "Type: ".blue + "#{values[1].capitalize.magenta}"
         puts "Price: ".blue + "#{values[3].magenta}"
