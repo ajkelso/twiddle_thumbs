@@ -4,7 +4,7 @@ class Type
     attr_accessor :title
     
     def initialize
-        @list = ["Recreational", "Education", "Social", "Music", "Cooking", "Relaxation", "Busywork"]
+        @list = ["Recreational", "Education", "Social", "Music", "Cooking", "Relaxation", "Busywork", "DIY", "Charity"]
     end
     
     def create_url
