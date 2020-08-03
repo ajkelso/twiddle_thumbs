@@ -5,6 +5,7 @@ require_relative "./twiddle_thumbs/type"
 require_relative "./twiddle_thumbs/api"
 require_relative "./twiddle_thumbs/price"
 require_relative "./twiddle_thumbs/participants"
+require_relative "./twiddle_thumbs/Activity"
 
 
 

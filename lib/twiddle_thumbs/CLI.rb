@@ -4,6 +4,8 @@ class TwiddleThumbs::CLI
         welcome
         bored
         activity_process
+        list_all_activities
+        goodbye
     end
 
     def welcome
@@ -35,12 +37,12 @@ class TwiddleThumbs::CLI
     end
 
     def suggestion_list
-        puts "OK...Let's help find you something interesting to do...".light_blue
+        puts "OK...Let's help find you something interesting to do!\nHow would you like to search for an activity?".light_blue
         puts "\n"
         @parameter_list = ["Price", "Type", "Participants", "Random"]
         @parameter_list.each_with_index {|parameter, index| puts "#{index + 1}. ".blue + "#{parameter}".light_cyan}
         puts "\n \n"
-        print "Please choose how you would like to search for an activity using the list number:".magenta
+        print "Which selection would you like: ".magenta
     end
 
     def get_choice
@@ -70,7 +72,9 @@ class TwiddleThumbs::CLI
     end
 
     def get_activity
-        Api.new(@url).pretty_print
+        api = Api.new(@url)
+        activity = Activity.new(api.parse_json)
+        activity.pretty_print
     end
 
     def still_bored
@@ -80,17 +84,22 @@ class TwiddleThumbs::CLI
         if answer == "y"
             system 'clear'
             activity_process
-        elsif answer == "n"
-            goodbye
-        else
-            "Invalid Entry".red
+        elsif answer != "n"
+            puts "Invalid Entry".red
             still_bored
         end
     end
 
+    def list_all_activities
+        system 'clear'
+        puts "Here's your new to-do list!\n".light_cyan
+        Activity.all.each_with_index {|activity, index| puts "#{index + 1}. #{activity.activity.yellow}"}
+       
+    end
+
     def goodbye
         puts "\n \n"
-        puts "Great!!  Stay busy & Thanks for stopping by!  Goodbye!".light_cyan
+        puts "Stay busy & Thanks for stopping by!  Goodbye!".light_cyan
     end
 
 
