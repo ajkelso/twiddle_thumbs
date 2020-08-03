@@ -7,13 +7,28 @@ module ChooseAndCreate
         puts "Choose from the list below:".blue
         puts "\n"
         @list.each_with_index {|selection, index| puts "#{index + 1}. ".light_blue + "#{selection}".light_magenta}
+        # print "\n \n"
+        # print "Which selection would you like?: ".light_blue
+        # input = Integer(gets) rescue 
+        # if input
+        #     if input.between?(1, @list.length)
+        #         self.title = @list[input - 1]
+        #     end
+        # else
+        #     puts "Please enter a vaild number".red
+        # end
+        # puts self.title
+    end
+
+    def get_choice
         print "\n \n"
         print "Which selection would you like?: ".light_blue
-        input = gets.chomp.to_i
+        input = gets.chomp.to_i 
         if input.between?(1, @list.length)
-            self.title = @list[input - 1]
+                self.title = @list[input - 1]
         else
             puts "Please enter a vaild number".red
+            get_choice
         end
         puts self.title
     end

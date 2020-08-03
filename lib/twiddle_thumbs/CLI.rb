@@ -33,7 +33,7 @@ class TwiddleThumbs::CLI
         get_choice
         category_list
         get_activity
-        still_bored
+        another_activity
     end
 
     def suggestion_list
@@ -67,6 +67,7 @@ class TwiddleThumbs::CLI
                 @parameter = Participants.new
             end
             @parameter.choose
+            @parameter.get_choice
             @url = @parameter.create_url
         end
     end
@@ -77,16 +78,16 @@ class TwiddleThumbs::CLI
         activity.pretty_print
     end
 
-    def still_bored
+    def another_activity
         puts "\n \n"
-        print "Still bored? y/n: ".cyan
+        print "Would you like to find another activity? y/n: ".cyan
         answer = gets.chomp
         if answer == "y"
             system 'clear'
             activity_process
         elsif answer != "n"
             puts "Invalid Entry".red
-            still_bored
+            another_activity
         end
     end
 
