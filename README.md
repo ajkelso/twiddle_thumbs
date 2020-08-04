@@ -1,11 +1,6 @@
 # TwiddleThumbs
 
-Solve your bordem problem!
-
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/twiddle_thumbs`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Hello, and welcome to TwiddleThumbs!  In the current age of the COVID pandemic, boredom is more widespread than ever.  We're here to help you fix that problem!  TwiddleThumbs is a CLI app that uses boredapi.com to help you find something interesting to do!  You can get an activity at random or choose from a list of parameters that will help you find what's right for you.  Enjoy and stay safe & sane!
 
 ## Installation
 
@@ -25,7 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To run the cli got to the project directory and execute:
+
+    `$ bin/twiddle_thumbs`
 
 ## Development
 

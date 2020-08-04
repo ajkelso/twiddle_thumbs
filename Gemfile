@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in twiddle_thumbs.gemspec
-gemspec
 
+gemspec
+gem 'twiddle_thumbs'
 gem "rake", "~> 12.0"
 
