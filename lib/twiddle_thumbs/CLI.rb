@@ -27,14 +27,14 @@ class TwiddleThumbs::CLI
     end
 
     def activity_process
-        suggestion_list
-        get_choice
-        category_list
+        parameter_list
+        get_parameter_choice
+        url_from_category_list
         get_activity
         another_activity
     end
 
-    def suggestion_list
+    def parameter_list
         puts "OK...Let's help find you something interesting to do!\nHow would you like to search for an activity?\n".light_blue
         @parameter_list = ["Price", "Type", "Participants", "Random"]
         @parameter_list.each_with_index {|parameter, index| puts "#{index + 1}. ".blue + "#{parameter}".light_cyan}
@@ -42,31 +42,89 @@ class TwiddleThumbs::CLI
         print "Which selection would you like: ".magenta
     end
 
-    def get_choice
+    def get_parameter_choice
         @input = gets.chomp.to_i
         if @input.between?(1, @parameter_list.length)
             @choice = @parameter_list[@input - 1]
         else
             puts "Please enter a valid number.".red
-            get_choice
+            get_parameter_choice
         end
     end
 
-    def category_list
+    def url_from_category_list
         if @choice == "Random"
             @url = "http://www.boredapi.com/api/activity/"
         else
             if @choice == "Type"
-                @parameter = Type.new
+                @category_list = ["Recreational", "Education", "Social", "Music", "Cooking", "Relaxation", "Busywork", "DIY", "Charity"]
+                category_choice
+                create_type_url
             elsif @choice == "Price"
-                @parameter = Price.new
+                @category_list = ["Free", "Cheap", "Costs a little $$", "Expensive"]
+                category_choice
+                translate_price
+                create_url
             elsif @choice == "Participants"
-                @parameter = Participants.new
+                @category_list = ["1 Person", "2 People", "3 People", "4 or more"]
+                category_choice
+                translate_participants
+                create_url
             end
-            @parameter.choose
-            @parameter.get_choice
-            @url = @parameter.create_url
         end
+    end
+
+    def category_choice
+        system "clear"
+        puts "Choose from the list below:".blue
+        puts "\n"
+        @category_list.each_with_index {|selection, index| puts "#{index + 1}. ".light_blue + "#{selection}".light_magenta}
+        get_category_choice
+    end
+
+    def get_category_choice
+        print "\n \n"
+        print "Which selection would you like?: ".light_blue
+        input = gets.chomp.to_i 
+        if input.between?(1, @category_list.length)
+                @category_selection = @category_list[input - 1]
+        else
+            puts "Please enter a vaild number".red
+            get_parameter_choice
+        end
+        puts @category_selection
+    end
+
+    def create_type_url
+        @url = "http://www.boredapi.com/api/activity?" + "type=#{@category_selection.downcase}"
+    end
+
+    def translate_price
+        if @category_selection == "Free"
+            @category_selection = "selection=0.0"
+        elsif @category_selection == "Cheap"
+            @category_selection = "minprice=0.01&maxprice=0.19"
+        elsif @category_selection =="Costs a little $$"
+            @category_selection = "minprice=0.2&maxprice=0.6"
+        elsif @category_selection == "Expensive"
+            @category_selection = "minprice=0.61&maxprice=1"
+        end
+    end
+
+    def translate_participants
+        if @category_selection == @category_list[0]
+            @category_selection = "participants=1"
+        elsif @category_selection == @category_list[1]
+            @category_selection = "participants=2"
+        elsif @category_selection == @category_list[2]
+            @category_selection = "participants=3"
+        elsif @category_selection == @category_list[3]
+            @category_selection = "minparticipants=4"
+        end
+    end
+
+    def create_url
+        @url = "http://www.boredapi.com/api/activity?#{@category_selection}"
     end
 
     def get_activity
@@ -91,8 +149,8 @@ class TwiddleThumbs::CLI
     def list_all_activities
         system 'clear'
         puts "Here's your new to-do list!\n".light_cyan
-        Activity.all.each_with_index {|activity, index| puts "#{index + 1}. #{activity.activity.yellow}"}
-       
+        activities = Activity.all.map {|activity| activity.activity}.uniq
+        activities.each_with_index {|activity, index| puts " #{index + 1}. #{activity.italic.red.on_white} "}
     end
 
     def goodbye
