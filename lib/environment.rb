@@ -11,6 +11,7 @@ require_relative "./twiddle_thumbs/Activity"
 
 require "colorize"
 require "pry"
+require "lolcat"
 
 
 module TwiddleThumbs

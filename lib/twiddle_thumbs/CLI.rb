@@ -9,9 +9,7 @@ class TwiddleThumbs::CLI
     end
 
     def welcome
-        puts "!!!WELCOME TO TWIDDLE THUMBS!!!".blue.underline
-        puts "-If you're bored, we're here to help-".magenta
-        puts "\n \n"
+        puts "!!!WELCOME TO TWIDDLE THUMBS!!!".blue.underline + "\n \n -If you're bored, we're here to help- \n\n".magenta
     end
 
     def bored
@@ -37,8 +35,7 @@ class TwiddleThumbs::CLI
     end
 
     def suggestion_list
-        puts "OK...Let's help find you something interesting to do!\nHow would you like to search for an activity?".light_blue
-        puts "\n"
+        puts "OK...Let's help find you something interesting to do!\nHow would you like to search for an activity?\n".light_blue
         @parameter_list = ["Price", "Type", "Participants", "Random"]
         @parameter_list.each_with_index {|parameter, index| puts "#{index + 1}. ".blue + "#{parameter}".light_cyan}
         puts "\n \n"
@@ -47,7 +44,7 @@ class TwiddleThumbs::CLI
 
     def get_choice
         @input = gets.chomp.to_i
-        if @input.between?(1, 4)
+        if @input.between?(1, @parameter_list.length)
             @choice = @parameter_list[@input - 1]
         else
             puts "Please enter a valid number.".red
