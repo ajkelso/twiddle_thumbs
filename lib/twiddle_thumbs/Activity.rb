@@ -10,9 +10,9 @@ class Activity
             self.price = "Free!"
         elsif self.price.between?(0.01, 0.19)
             self.price = "Cheap"
-        elsif self.price.between?(0.2, 0.6)
+        elsif self.price.between?(0.2, 0.5)
             self.price = "Costs a little $$"
-        elsif self.price > 0.6
+        elsif self.price > 0.51
             self.price = "EXPENSIVE"
         end
         @@all << self

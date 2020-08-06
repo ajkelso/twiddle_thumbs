@@ -10,7 +10,7 @@ class TwiddleThumbs::CLI
 
     def welcome
         puts rainbow("!!!WELCOME TO TWIDDLE THUMBS!!!") 
-        puts "\n \n -If you're bored, we're here to help- \n\n".magenta
+        puts "\n -If you're bored, we're here to help- \n\n".magenta
     end
 
     def bored
@@ -106,9 +106,9 @@ class TwiddleThumbs::CLI
         elsif @category_selection == "Cheap"
             @category_selection = "minprice=0.01&maxprice=0.19"
         elsif @category_selection =="Costs a little $$"
-            @category_selection = "minprice=0.2&maxprice=0.6"
+            @category_selection = "minprice=0.2&maxprice=0.5"
         elsif @category_selection == "Expensive"
-            @category_selection = "minprice=0.61&maxprice=1"
+            @category_selection = "minprice=0.51&maxprice=1"
         end
     end
 
@@ -152,14 +152,14 @@ class TwiddleThumbs::CLI
         puts "Here's your new to-do list!\n".light_cyan
         activities = Activity.all.map {|activity| activity.activity}.uniq
         activities.each_with_index do |activity, index| 
-            print "#{index + 1}." 
-            puts " #{rainbow(activity)}"
+            print "#{index + 1}. " 
+            print "#{rainbow(activity)}"
         end
     end
 
     def goodbye
         puts "\n \n"
-        puts "Stay busy & Thanks for stopping by!  Goodbye!".light_cyan
+        puts "Stay busy & Thanks for stopping by!  Goodbye! \n\n".light_cyan
     end
 
     def rainbow(string)
