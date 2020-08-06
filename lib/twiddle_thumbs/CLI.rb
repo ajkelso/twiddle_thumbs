@@ -58,7 +58,7 @@ class TwiddleThumbs::CLI
             @url = "http://www.boredapi.com/api/activity/"
         else
             if @choice == "Type"
-                @category_list = ["Recreational", "Education", "Social", "Music", "Cooking", "Relaxation", "Busywork", "DIY", "Charity"]
+                @category_list = ["Recreational", "Education", "Social", "Music", "Cooking", "Relaxation", "Busywork", "Charity"]
                 category_choice
                 create_type_url
             elsif @choice == "Price"

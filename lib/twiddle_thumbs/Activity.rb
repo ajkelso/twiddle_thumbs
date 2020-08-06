@@ -27,7 +27,6 @@ class Activity
         puts "You should...".blue
         puts "\n"
         puts rainbow(self.activity)
-        puts "\n"
         puts "Type: ".blue + "#{self.type.capitalize.magenta}"
         puts "Price: ".blue + "#{self.price.magenta}"
         puts "Participants: ".blue + "#{self.participants.to_s.magenta}"
