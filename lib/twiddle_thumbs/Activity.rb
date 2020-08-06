@@ -26,11 +26,23 @@ class Activity
         system 'clear'
         puts "You should...".blue
         puts "\n"
-        puts "#{self.activity}!".light_cyan.underline
+        puts rainbow(self.activity)
         puts "\n"
         puts "Type: ".blue + "#{self.type.capitalize.magenta}"
         puts "Price: ".blue + "#{self.price.magenta}"
         puts "Participants: ".blue + "#{self.participants.to_s.magenta}"
+    end
+
+    def rainbow(string)
+        characters = string.split(" ")
+        colors = [:red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan]
+        x = 0
+        color_array = []
+        while x < characters.length
+            color_array << characters[x].colorize(colors[x])
+            x += 1
+        end
+        puts "#{color_array.join(" ")}!"
     end
     
 

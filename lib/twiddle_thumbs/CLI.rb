@@ -9,7 +9,8 @@ class TwiddleThumbs::CLI
     end
 
     def welcome
-        puts "!!!WELCOME TO TWIDDLE THUMBS!!!".blue.underline + "\n \n -If you're bored, we're here to help- \n\n".magenta
+        puts rainbow("!!!WELCOME TO TWIDDLE THUMBS!!!") 
+        puts "\n \n -If you're bored, we're here to help- \n\n".magenta
     end
 
     def bored
@@ -150,13 +151,29 @@ class TwiddleThumbs::CLI
         system 'clear'
         puts "Here's your new to-do list!\n".light_cyan
         activities = Activity.all.map {|activity| activity.activity}.uniq
-        activities.each_with_index {|activity, index| puts " #{index + 1}. #{activity.italic.red.on_white} "}
+        activities.each_with_index do |activity, index| 
+            print "#{index + 1}." 
+            puts " #{rainbow(activity)}"
+        end
     end
 
     def goodbye
         puts "\n \n"
         puts "Stay busy & Thanks for stopping by!  Goodbye!".light_cyan
     end
+
+    def rainbow(string)
+        characters = string.split(" ")
+        colors = [:red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan]
+        x = 0
+        color_array = []
+        while x < characters.length
+            color_array << characters[x].colorize(colors[x])
+            x += 1
+        end
+        puts color_array.join(" ")
+    end
+
 
 
 end
