@@ -84,14 +84,14 @@ class TwiddleThumbs::CLI
     end
 
     def get_category_choice
-        print "\n \n"
+        print "\n"
         print "Which selection would you like?: ".light_blue
         input = gets.chomp.to_i 
         if input.between?(1, @category_list.length)
                 @category_selection = @category_list[input - 1]
         else
             puts "Please enter a vaild number".red
-            get_parameter_choice
+            get_category_choice
         end
         puts @category_selection
     end
@@ -102,7 +102,7 @@ class TwiddleThumbs::CLI
 
     def translate_price
         if @category_selection == "Free"
-            @category_selection = "selection=0.0"
+            @category_selection = "price=0.0"
         elsif @category_selection == "Cheap"
             @category_selection = "minprice=0.01&maxprice=0.19"
         elsif @category_selection =="Costs a little $$"
