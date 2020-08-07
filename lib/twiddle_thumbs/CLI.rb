@@ -60,6 +60,11 @@ class TwiddleThumbs::CLI
             if @choice == "Type"
                 @category_list = ["Recreational", "Education", "Social", "Music", "Cooking", "Relaxation", "Busywork", "Charity"]
                 category_choice
+                if @category_selection == "Social"
+                    system 'clear'
+                    puts "\n\n\n** Please consider wearing a mask and be sure to follow social distance guidelines **\n\n\n".red.underline
+                    sleep(3)
+                end
                 create_type_url
             elsif @choice == "Price"
                 @category_list = ["Free", "Cheap", "Costs a little $$", "Expensive"]
