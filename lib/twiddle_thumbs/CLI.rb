@@ -9,7 +9,13 @@ class TwiddleThumbs::CLI
     end
 
     def welcome
-        puts rainbow("!!!WELCOME TO TWIDDLE THUMBS!!!") 
+        puts "WELCOME TO:".magenta
+        puts "                                                            __ __ __ ".red
+        puts " _____       _   _   _ _        _____ _             _      |  |  |  |".red
+        puts "|_   _|_ _ _|_|_| |_| | |___   |_   _| |_ _ _ _____| |_ ___|  |  |  |".yellow
+        puts "  | | | | | | | . | . | | -_|    | | |   | | |     | . |_ -|__|__|__|".green
+        puts "  |_| |_____|_|___|___|_|___|    |_| |_|_|___|_|_|_|___|___|__|__|__|".blue   
+                                                                                                 
         puts "\n -If you're bored, we're here to help- \n\n".magenta
     end
 
@@ -35,8 +41,9 @@ class TwiddleThumbs::CLI
         another_activity
     end
 
-    def parameter_list
-        puts "OK...Let's help find you something interesting to do!\nHow would you like to search for an activity?\n".light_blue
+    def parameter_list 
+        puts rainbow("OK... Let's help find you something interesting to do!")
+        puts "\nHow would you like to search for an activity?\n".light_blue
         @parameter_list = ["Price", "Type", "Participants", "Random"]
         @parameter_list.each_with_index {|parameter, index| puts "#{index + 1}. ".blue + "#{parameter}".light_cyan}
         puts "\n \n"
@@ -60,11 +67,6 @@ class TwiddleThumbs::CLI
             if @choice == "Type"
                 @category_list = ["Recreational", "Education", "Social", "Music", "Cooking", "Relaxation", "Busywork", "Charity"]
                 category_choice
-                if @category_selection == "Social"
-                    system 'clear'
-                    puts "\n\n\n** Please consider wearing a mask and be sure to follow social distance guidelines **\n\n\n".red.underline
-                    sleep(3)
-                end
                 create_type_url
             elsif @choice == "Price"
                 @category_list = ["Free", "Cheap", "Costs a little $$", "Expensive"]
@@ -135,8 +137,8 @@ class TwiddleThumbs::CLI
 
     def get_activity
         api = Api.new(@url)
-        activity = Activity.new(api.parse_json)
-        activity.pretty_print
+        suggestion = Suggestion.new(api.parse_json)
+        suggestion.pretty_print
     end
 
     def another_activity
@@ -155,7 +157,7 @@ class TwiddleThumbs::CLI
     def list_all_activities
         system 'clear'
         puts "Here's your new to-do list!\n".light_cyan
-        activities = Activity.all.map {|activity| activity.activity}.uniq
+        activities = Suggestion.all.map {|suggestion| suggestion.activity}.uniq
         activities.each_with_index do |activity, index| 
             print "#{index + 1}. " 
             print "#{rainbow(activity)}"
@@ -164,7 +166,12 @@ class TwiddleThumbs::CLI
 
     def goodbye
         puts "\n \n"
-        puts "Stay busy & Thanks for stopping by!  Goodbye! \n\n".light_cyan
+        puts "Stay busy & Thanks for visiting".light_cyan
+        puts "                                                            __ __ __ ".red
+        puts " _____       _   _   _ _        _____ _             _      |  |  |  |".red
+        puts "|_   _|_ _ _|_|_| |_| | |___   |_   _| |_ _ _ _____| |_ ___|  |  |  |".yellow
+        puts "  | | | | | | | . | . | | -_|    | | |   | | |     | . |_ -|__|__|__|".green
+        puts "  |_| |_____|_|___|___|_|___|    |_| |_|_|___|_|_|_|___|___|__|__|__|\n\n".blue   
     end
 
     def rainbow(string)

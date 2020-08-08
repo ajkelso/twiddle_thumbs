@@ -1,4 +1,4 @@
-class Activity
+class Suggestion
 
     attr_accessor :activity, :price, :type, :participants, :link, :key, :accessibility
 
@@ -27,8 +27,11 @@ class Activity
         puts "You should...".blue
         puts "\n"
         puts rainbow(self.activity)
-        puts "Type: ".blue + "#{self.type.capitalize.magenta}"
-        puts "Price: ".blue + "#{self.price.magenta}"
+        print "Type: ".blue + "#{self.type.capitalize.magenta}"
+        if self.type == "social"
+            print " * Please consider wearing a mask and be sure to follow social distance guidelines *".red
+        end
+        puts "\nPrice: ".blue + "#{self.price.magenta}"
         puts "Participants: ".blue + "#{self.participants.to_s.magenta}"
     end
 
