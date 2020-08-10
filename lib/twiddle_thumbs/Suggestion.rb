@@ -36,15 +36,15 @@ class Suggestion
     end
 
     def rainbow(string)
-        characters = string.split(" ")
+        words = string.split(" ")
         colors = [:red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan]
         x = 0
-        color_array = []
-        while x < characters.length
-            color_array << characters[x].colorize(colors[x])
+        array_of_words_rainbow = []
+        while x < words.length
+            array_of_words_rainbow << words[x].colorize(colors[x])
             x += 1
         end
-        puts "#{color_array.join(" ")}!"
+        puts "#{array_of_words_rainbow.join(" ")}!"
     end
     
 

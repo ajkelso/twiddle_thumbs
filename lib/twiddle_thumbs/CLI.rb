@@ -1,4 +1,5 @@
 class TwiddleThumbs::CLI
+    
     def call
         system 'clear'
         welcome
@@ -21,10 +22,10 @@ class TwiddleThumbs::CLI
 
     def bored
         print "Are you bored? y/n:".light_cyan
-        answer = gets.chomp.downcase
-        if answer.start_with?("y")
+        bored_answer = gets.chomp.downcase
+        if bored_answer.start_with?("y")
             system 'clear'
-        elsif answer.start_with?("n")
+        elsif bored_answer.start_with?("n") || bored_answer == "exit"
             goodbye
             exit
         else
@@ -53,7 +54,7 @@ class TwiddleThumbs::CLI
     def get_parameter_choice
         @input = gets.chomp.to_i
         if @input.between?(1, @parameter_list.length)
-            @choice = @parameter_list[@input - 1]
+            @chosen_category = @parameter_list[@input - 1]
         else
             puts "Please enter a valid number.".red
             get_parameter_choice
@@ -61,20 +62,20 @@ class TwiddleThumbs::CLI
     end
 
     def url_from_category_list
-        if @choice == "Random"
+        if @chosen_category == "Random"
             @url = "http://www.boredapi.com/api/activity/"
         else
-            if @choice == "Type"
-                @category_list = ["Recreational", "Education", "Social", "Music", "Cooking", "Relaxation", "Busywork", "Charity"]
+            if @chosen_category == "Type"
+                @sub_categories = ["Recreational", "Education", "Social", "Music", "Cooking", "Relaxation", "Busywork", "Charity"]
                 category_choice
                 create_type_url
-            elsif @choice == "Price"
-                @category_list = ["Free", "Cheap", "Costs a little $$", "Expensive"]
+            elsif @chosen_category == "Price"
+                @sub_categories = ["Free", "Cheap", "Costs a little $$", "Expensive"]
                 category_choice
                 translate_price
                 create_url
-            elsif @choice == "Participants"
-                @category_list = ["1 Person", "2 People", "3 People", "4 or more"]
+            elsif @chosen_category == "Participants"
+                @sub_categories = ["1 Person", "2 People", "3 People", "4 or more"]
                 category_choice
                 translate_participants
                 create_url
@@ -86,53 +87,53 @@ class TwiddleThumbs::CLI
         system "clear"
         puts "Choose from the list below:".blue
         puts "\n"
-        @category_list.each_with_index {|selection, index| puts "#{index + 1}. ".light_blue + "#{selection}".light_magenta}
-        get_category_choice
+        @sub_categories.each_with_index {|sub_category, index| puts "#{index + 1}. ".light_blue + "#{sub_category}".light_magenta}
+        get_sub_category_choice
     end
 
-    def get_category_choice
+    def get_sub_category_choice
         print "\n"
         print "Which selection would you like?: ".light_blue
         input = gets.chomp.to_i 
-        if input.between?(1, @category_list.length)
-                @category_selection = @category_list[input - 1]
+        if input.between?(1, @sub_categories.length)
+                @sub_category_choice = @sub_categories[input - 1]
         else
             puts "Please enter a vaild number".red
-            get_category_choice
+            get_sub_category_choice
         end
-        puts @category_selection
+        puts @sub_category_choice
     end
 
     def create_type_url
-        @url = "http://www.boredapi.com/api/activity?" + "type=#{@category_selection.downcase}"
+        @url = "http://www.boredapi.com/api/activity?" + "type=#{@sub_category_choice.downcase}"
     end
 
     def translate_price
-        if @category_selection == "Free"
-            @category_selection = "price=0.0"
-        elsif @category_selection == "Cheap"
-            @category_selection = "minprice=0.01&maxprice=0.19"
-        elsif @category_selection =="Costs a little $$"
-            @category_selection = "minprice=0.2&maxprice=0.5"
-        elsif @category_selection == "Expensive"
-            @category_selection = "minprice=0.51&maxprice=1"
+        if @sub_category_choice == "Free"
+            @sub_category_choice = "price=0.0"
+        elsif @sub_category_choice == "Cheap"
+            @sub_category_choice = "minprice=0.01&maxprice=0.19"
+        elsif @sub_category_choice =="Costs a little $$"
+            @sub_category_choice = "minprice=0.2&maxprice=0.5"
+        elsif @sub_category_choice == "Expensive"
+            @sub_category_choice = "minprice=0.51&maxprice=1"
         end
     end
 
     def translate_participants
-        if @category_selection == @category_list[0]
-            @category_selection = "participants=1"
-        elsif @category_selection == @category_list[1]
-            @category_selection = "participants=2"
-        elsif @category_selection == @category_list[2]
-            @category_selection = "participants=3"
-        elsif @category_selection == @category_list[3]
-            @category_selection = "minparticipants=4"
+        if @sub_category_choice == @sub_categories[0]
+            @sub_category_choice = "participants=1"
+        elsif @sub_category_choice == @sub_categories[1]
+            @sub_category_choice = "participants=2"
+        elsif @sub_category_choice == @sub_categories[2]
+            @sub_category_choice = "participants=3"
+        elsif @sub_category_choice == @sub_categories[3]
+            @sub_category_choice = "minparticipants=4"
         end
     end
 
     def create_url
-        @url = "http://www.boredapi.com/api/activity?#{@category_selection}"
+        @url = "http://www.boredapi.com/api/activity?#{@sub_category_choice}"
     end
 
     def get_activity
@@ -175,15 +176,15 @@ class TwiddleThumbs::CLI
     end
 
     def rainbow(string)
-        characters = string.split(" ")
+        words = string.split(" ")
         colors = [:red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan]
         x = 0
-        color_array = []
-        while x < characters.length
-            color_array << characters[x].colorize(colors[x])
+        array_of_words_rainbow = []
+        while x < words.length
+            array_of_words_rainbow << words[x].colorize(colors[x])
             x += 1
         end
-        puts color_array.join(" ")
+        puts array_of_words_rainbow.join(" ")
     end
 
 

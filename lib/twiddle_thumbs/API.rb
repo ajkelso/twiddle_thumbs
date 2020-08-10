@@ -1,7 +1,3 @@
-require 'net/http'
-require 'open-uri'
-require 'json'
-
 class Api
     def initialize(url)
         @url = url
