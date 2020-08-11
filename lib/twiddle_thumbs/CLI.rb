@@ -176,8 +176,8 @@ class TwiddleThumbs::CLI
 
     def rainbow(string)
         words = string.split(" ")
-        colors = [:red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan]
-        words.zip(colors).map {|word, color| word.colorize(color)}.join(" ")
+        colors = [:red, :green, :yellow, :blue, :light_magenta, :light_cyan]
+        words.zip(colors.cycle).map {|word, color| word.colorize(color)}.join(" ")
     end
 
 
