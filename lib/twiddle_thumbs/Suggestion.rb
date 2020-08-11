@@ -26,8 +26,8 @@ class Suggestion
         system 'clear'
         puts "You should...".blue
         puts "\n"
-        puts rainbow(self.activity)
-        print "Type: ".blue + "#{self.type.capitalize.magenta}"
+        puts rainbow(self.activity) + "!".light_yellow
+        print "\nType: ".blue + "#{self.type.capitalize.magenta}"
         if self.type == "social"
             print " * Please consider wearing a mask and be sure to follow social distance guidelines *".red
         end
@@ -38,13 +38,7 @@ class Suggestion
     def rainbow(string)
         words = string.split(" ")
         colors = [:red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan]
-        x = 0
-        array_of_words_rainbow = []
-        while x < words.length
-            array_of_words_rainbow << words[x].colorize(colors[x])
-            x += 1
-        end
-        puts "#{array_of_words_rainbow.join(" ")}!"
+        words.zip(colors).map {|word, color| word.colorize(color)}.join(" ")
     end
     
 

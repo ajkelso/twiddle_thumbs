@@ -160,8 +160,7 @@ class TwiddleThumbs::CLI
         puts "Here's your new to-do list!\n".light_cyan
         activities = Suggestion.all.map {|suggestion| suggestion.activity}.uniq
         activities.each_with_index do |activity, index| 
-            print "#{index + 1}. " 
-            print "#{rainbow(activity)}"
+            puts "#{index + 1}. #{rainbow(activity)}!"
         end
     end
 
@@ -178,13 +177,7 @@ class TwiddleThumbs::CLI
     def rainbow(string)
         words = string.split(" ")
         colors = [:red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan, :red, :green, :yellow, :blue, :light_magenta, :light_cyan]
-        x = 0
-        array_of_words_rainbow = []
-        while x < words.length
-            array_of_words_rainbow << words[x].colorize(colors[x])
-            x += 1
-        end
-        puts array_of_words_rainbow.join(" ")
+        words.zip(colors).map {|word, color| word.colorize(color)}.join(" ")
     end
 
 
