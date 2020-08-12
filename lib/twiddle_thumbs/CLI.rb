@@ -48,10 +48,10 @@ class TwiddleThumbs::CLI
         @parameter_list = ["Price", "Type", "Participants", "Random"]
         @parameter_list.each_with_index {|parameter, index| puts "#{index + 1}. ".blue + "#{parameter}".light_cyan}
         puts "\n \n"
-        print "Which selection would you like: ".magenta
     end
 
     def get_parameter_choice
+        print "Which selection would you like: ".magenta
         @input = gets.chomp.to_i
         if @input.between?(1, @parameter_list.length)
             @chosen_category = @parameter_list[@input - 1]
@@ -62,19 +62,19 @@ class TwiddleThumbs::CLI
     end
 
     def url_from_category_list
-        if @chosen_category == "Random"
+        if @chosen_category == @parameter_list[3]
             @url = "http://www.boredapi.com/api/activity/"
         else
-            if @chosen_category == "Type"
+            if @chosen_category == @parameter_list[1]
                 @sub_categories = ["Recreational", "Education", "Social", "Music", "Cooking", "Relaxation", "Busywork", "Charity"]
                 category_choice
                 create_type_url
-            elsif @chosen_category == "Price"
+            elsif @chosen_category == @parameter_list[0]
                 @sub_categories = ["Free", "Cheap", "Costs a little $$", "Expensive"]
                 category_choice
                 translate_price
                 create_url
-            elsif @chosen_category == "Participants"
+            elsif @chosen_category == @parameter_list[2]
                 @sub_categories = ["1 Person", "2 People", "3 People", "4 or more"]
                 category_choice
                 translate_participants
@@ -88,11 +88,11 @@ class TwiddleThumbs::CLI
         puts "Choose from the list below:".blue
         puts "\n"
         @sub_categories.each_with_index {|sub_category, index| puts "#{index + 1}. ".light_blue + "#{sub_category}".light_magenta}
+        puts "\n"
         get_sub_category_choice
     end
 
     def get_sub_category_choice
-        print "\n"
         print "Which selection would you like?: ".light_blue
         input = gets.chomp.to_i 
         if input.between?(1, @sub_categories.length)
@@ -140,13 +140,13 @@ class TwiddleThumbs::CLI
         api = Api.new(@url)
         suggestion = Suggestion.new(api.parse_json)
         suggestion.pretty_print
+        puts "\n \n"
     end
 
     def another_activity
-        puts "\n \n"
         print "Would you like to find another activity? y/n: ".cyan
-        answer = gets.chomp
-        if answer == "y"
+        answer = gets.chomp.downcase
+        if answer.start_with?("y")
             system 'clear'
             activity_process
         elsif answer != "n"
@@ -179,7 +179,4 @@ class TwiddleThumbs::CLI
         colors = [:red, :green, :yellow, :blue, :light_magenta, :light_cyan]
         words.zip(colors.cycle).map {|word, color| word.colorize(color)}.join(" ")
     end
-
-
-
 end

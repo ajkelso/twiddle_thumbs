@@ -40,6 +40,5 @@ class Suggestion
         colors = [:red, :green, :yellow, :blue, :light_magenta, :light_cyan]
         words.zip(colors.cycle).map {|word, color| word.colorize(color)}.join(" ")
     end
-    
 
 end
